@@ -1,0 +1,24 @@
+#ROS build files
+devel/
+build/
+install/
+*.pyc
+pychache/
+*.so
+*.dylib
+
+#catkin specific
+catkin_generated/
+cmake-build-debug/
+
+#IDE files (VS Code)
+.vscode/
+*.code-workspace
+
+#System files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+rosout.*
