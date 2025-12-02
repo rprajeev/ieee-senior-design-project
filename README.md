@@ -4,7 +4,7 @@ University of Memphis team ROS2 workspace template.
 ## Where to put files
 Put ROS2 packages here:
 ```
-~/ros2_ws/src/<your_package>
+~/ROS/ieee-senior-design-project/src/<your_package>
 ```
 Must include `package.xml` + `CMakeLists.txt` (C++), or `setup.py` (Python). Do **not** commit `build/ install/ log/`.
 
