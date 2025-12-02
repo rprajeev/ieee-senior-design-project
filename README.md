@@ -11,7 +11,7 @@ Must include `package.xml` + `CMakeLists.txt` (C++), or `setup.py` (Python). Do 
 ## Launch (Emma)
 Build workspace:
 ```bash
-cd ~/ros2_ws
+cd ~/ROS/ieee-senior-design-project
 rosdep update && rosdep install --from-paths src --ignore-src -r -y
 colcon build --symlink-install
 source install/setup.bash
