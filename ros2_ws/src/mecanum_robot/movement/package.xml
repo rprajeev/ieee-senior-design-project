@@ -6,6 +6,8 @@
 
   <maintainer email="rprajeev@example.com">rprajeev</maintainer>
   <license>MIT</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
 
   <exec_depend>rclpy</exec_depend>
 
