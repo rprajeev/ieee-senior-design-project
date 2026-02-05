@@ -1,28 +1,48 @@
-try:
-    from gpiozero import Motor, PWMOutputDevice
-except Exception:
-    # gpiozero not available (e.g. not running on Raspberry Pi); provide lightweight stubs for testing
+# ================================
+# TOGGLE THIS LINE
+# ================================
+# front left wheel pin 5 - forward, 6 - backward
+# front right wheel pin 13 - forward, 19 - backward
+# rear left wheel pin 12 - forward, 16 - backward
+# rear right wheel pin 20 - forward, 21 - backward
+# front pwm pin 18, rear pwm pin 23
+USE_MOCK = True   # <-- set to False when motors are wired
+# ================================
+
+if USE_MOCK:
+    # ---------------- MOCK HARDWARE ----------------
     class Motor:
         def __init__(self, forward=None, backward=None):
-            self._state = 0
+            self.forward_pin = forward
+            self.backward_pin = backward
+
         def forward(self):
-            self._state = 1
+            print(f"[MOCK] Motor({self.forward_pin},{self.backward_pin}) -> FORWARD")
+
         def backward(self):
-            self._state = -1
+            print(f"[MOCK] Motor({self.forward_pin},{self.backward_pin}) -> BACKWARD")
+
         def stop(self):
-            self._state = 0
+            print(f"[MOCK] Motor({self.forward_pin},{self.backward_pin}) -> STOP")
+
 
     class PWMOutputDevice:
-        def __init__(self, pin, active_high=True, initial_value=0.0):
-            self._value = float(initial_value)
+        def __init__(self, pin):
+            self.pin = pin
+            self._value = 0.0
+
         @property
         def value(self):
             return self._value
+
         @value.setter
         def value(self, v):
-            self._value = float(v)
-        def close(self):
-            pass
+            self._value = v
+            print(f"[MOCK] PWM(pin={self.pin}) = {v}")
+
+else:
+    # ---------------- REAL HARDWARE ----------------
+    from gpiozero import Motor, PWMOutputDevice
 
 
 class MecanumVehicle:
@@ -37,10 +57,10 @@ class MecanumVehicle:
         self.rr = Motor(forward=20, backward=21)
         self.rear_pwm = PWMOutputDevice(23)
 
-    def _set_motor(self, motor, value):
-        if value > 0:
+    def _set_motor(self, motor, direction):
+        if direction > 0:
             motor.forward()
-        elif value < 0:
+        elif direction < 0:
             motor.backward()
         else:
             motor.stop()
@@ -57,21 +77,8 @@ class MecanumVehicle:
     def stop(self):
         self.drive(0, 0, 0, 0, 0)
 
-    # High-level movements
     def forward(self, speed=0.4):
         self.drive(1, 1, 1, 1, speed)
 
-    def backward(self, speed=0.4):
-        self.drive(-1, -1, -1, -1, speed)
-
-    def strafe_right(self, speed=0.4):
-        self.drive(1, -1, -1, 1, speed)
-
-    def strafe_left(self, speed=0.4):
-        self.drive(-1, 1, 1, -1, speed)
-
     def rotate_cw(self, speed=0.4):
         self.drive(1, -1, 1, -1, speed)
-
-    def rotate_ccw(self, speed=0.4):
-        self.drive(-1, 1, -1, 1, speed)

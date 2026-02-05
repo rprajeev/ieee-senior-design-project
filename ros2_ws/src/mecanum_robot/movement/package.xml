@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>mecanum_robot</name>
+  <version>0.0.0</version>
+  <description>Mecanum robot control package</description>
+
+  <maintainer email="rprajeev@example.com">rprajeev</maintainer>
+  <license>MIT</license>
+
+  <exec_depend>rclpy</exec_depend>
+
+</package>

@@ -3,7 +3,7 @@ import time
 import rclpy
 from rclpy.node import Node
 
-from ..mecanum_vehicle import MecanumVehicle
+from movement.mecanum_vehicle import MecanumVehicle
 
 
 class MecanumNode(Node):
