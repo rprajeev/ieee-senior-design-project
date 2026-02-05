@@ -19,6 +19,7 @@ setup(
     license='Apache-2.0',
     entry_points={
         'console_scripts': [
+            # This registers the node with ROS 2
             'mecanum_node = movement.mecanum_node:main',
         ],
     },
