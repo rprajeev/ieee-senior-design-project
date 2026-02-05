@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>mecanum_robot</name>
+  <name>movement</name>
   <version>0.0.0</version>
   <description>Mecanum robot control package</description>
 
