@@ -1,37 +1,25 @@
-import time
-
 import rclpy
 from rclpy.node import Node
-
-from movement.mecanum_vehicle import MecanumVehicle
+from geometry_msgs.msg import Twist
 
 
 class MecanumNode(Node):
     def __init__(self):
         super().__init__('mecanum_node')
+        self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
+        self.timer = self.create_timer(0.1, self.timer_callback)
+        self.get_logger().info('Mecanum node started')
 
-        self.vehicle = MecanumVehicle()
-
-        self.start_time = time.time()
-
-        # Run autonomous loop at 10 Hz
-        self.timer = self.create_timer(0.1, self.autonomous_loop)
-
-        self.get_logger().info("Mecanum autonomous node started")
-
-    def autonomous_loop(self):
-        elapsed = time.time() - self.start_time
-
-        if elapsed < 3.0:
-            self.vehicle.forward(0.4)
-        elif elapsed < 5.0:
-            self.vehicle.rotate_cw(0.4)
-        else:
-            self.vehicle.stop()
+    def timer_callback(self):
+        msg = Twist()
+        msg.linear.x = 0.5     # forward
+        msg.linear.y = 0.0     # sideways
+        msg.angular.z = 0.0   # rotation
+        self.publisher_.publish(msg)
 
 
-def main():
-    rclpy.init()
+def main(args=None):
+    rclpy.init(args=args)
     node = MecanumNode()
     rclpy.spin(node)
     node.destroy_node()

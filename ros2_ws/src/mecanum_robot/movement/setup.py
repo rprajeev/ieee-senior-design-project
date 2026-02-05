@@ -1,20 +1,25 @@
 from setuptools import setup
 
-package_name = 'mecanum_robot'
+package_name = 'movement'
 
 setup(
     name=package_name,
     version='0.0.0',
     packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='rprajeev',
-    maintainer_email='rprajeev@example.com',
-    description='ROS2 mecanum robot control',
-    license='MIT',
+    maintainer='Your Name',
+    maintainer_email='you@email.com',
+    description='Mecanum wheel movement node',
+    license='Apache-2.0',
     entry_points={
         'console_scripts': [
-            'mecanum_node = mecanum_robot.mecanum_node:main',
+            'mecanum_node = movement.mecanum_node:main',
         ],
     },
 )
