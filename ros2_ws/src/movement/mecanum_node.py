@@ -1,33 +1,47 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
+from movement.mecanum_vehicle import MecanumVehicle
 
 
 class MecanumNode(Node):
     def __init__(self):
         super().__init__('mecanum_node')
-        # Publisher to command robot velocities
-        self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
-        # Timer triggers every 0.1 seconds
-        self.timer = self.create_timer(0.1, self.timer_callback)
-        self.get_logger().info('Mecanum node started')
+        self.vehicle = MecanumVehicle()
+        self.subscription = self.create_subscription(
+            Twist,
+            'cmd_vel',
+            self.cmd_vel_callback,
+            10
+        )
+        self.get_logger().info('Mecanum node started and ready to receive /cmd_vel')
 
-    def timer_callback(self):
-        # Create Twist message
-        msg = Twist()
-        msg.linear.x = 0.5    # forward/backward speed
-        msg.linear.y = 0.0    # sideways (strafing) speed
-        msg.angular.z = 0.0   # rotation
-        self.publisher_.publish(msg)
+    def cmd_vel_callback(self, msg: Twist):
+        vx = msg.linear.x     # forward/back
+        vy = msg.linear.y     # strafe
+        wz = msg.angular.z   # rotation
+
+        # Simple mecanum mixing (not normalized yet)
+        fl = vx - vy - wz
+        fr = vx + vy + wz
+        rl = vx + vy - wz
+        rr = vx - vy + wz
+
+        # Normalize wheel speeds
+        max_val = max(abs(fl), abs(fr), abs(rl), abs(rr), 1.0)
+        fl /= max_val
+        fr /= max_val
+        rl /= max_val
+        rr /= max_val
+
+        speed = max(abs(vx), abs(vy), abs(wz), 0.2)
+
+        self.vehicle.drive(fl, fr, rl, rr, speed)
 
 
 def main(args=None):
     rclpy.init(args=args)
     node = MecanumNode()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        node.destroy_node()
-        rclpy.shutdown()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()

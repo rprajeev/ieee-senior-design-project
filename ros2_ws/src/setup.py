@@ -13,13 +13,13 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='Your Name',
-    maintainer_email='you@email.com',
+    maintainer='rohith',
+    maintainer_email='rohith@example.com',
     description='Mecanum wheel movement node',
-    license='Apache-2.0',
+    license='Apache License 2.0',
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            # This registers the node with ROS 2
             'mecanum_node = movement.mecanum_node:main',
         ],
     },
