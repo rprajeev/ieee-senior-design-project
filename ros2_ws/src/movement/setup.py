@@ -17,7 +17,7 @@ setup(
     maintainer_email='rohith@example.com',
     description='Mecanum wheel movement node',
     license='Apache License 2.0',
-    tests_require=['pytest'],
+    tests_require=['pytest','setuptools'],
     entry_points={
         'console_scripts': [
             'mecanum_node = movement.mecanum_node:main',
