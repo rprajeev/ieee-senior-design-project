@@ -6,7 +6,7 @@
 # rear left wheel pin 12 - forward, 16 - backward
 # rear right wheel pin 20 - forward, 21 - backward
 # front pwm pin 18, rear pwm pin 23
-USE_MOCK = True   # <-- set to False when motors are wired
+USE_MOCK = False   # <-- set to False when motors are wired
 # ================================
 
 if USE_MOCK:
@@ -48,13 +48,13 @@ else:
 class MecanumVehicle:
     def __init__(self):
         # Front motors (L298 #1)
-        self.fl = Motor(forward=5, backward=6)
-        self.fr = Motor(forward=13, backward=19)
+        self.fl = Motor(forward=11, backward=12)
+        self.fr = Motor(forward=13, backward=15)
         self.front_pwm = PWMOutputDevice(18)
 
         # Rear motors (L298 #2)
-        self.rl = Motor(forward=12, backward=16)
-        self.rr = Motor(forward=20, backward=21)
+        self.rl = Motor(forward=16, backward=18)
+        self.rr = Motor(forward=22, backward=37)
         self.rear_pwm = PWMOutputDevice(23)
 
     def _set_motor(self, motor, direction):

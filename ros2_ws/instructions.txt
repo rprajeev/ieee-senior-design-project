@@ -1,0 +1,20 @@
+I tried to do this with a bash script, but it failed, so here we are. 
+
+Run 
+rm -rf build install log
+this gets rid of the stuff old. 
+
+colcon build
+it will give you some errors about stuff that dosen't matter. it should run for about 12 seconds and say 1 package finished. 
+
+Run
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+
+both of these tell ROS where to look. basically.
+
+Run
+install/movement/bin/mecanum_node
+
+This actually starts the node. 
+
