@@ -1,48 +1,14 @@
 # ================================
-# TOGGLE THIS LINE
+# Motor pin assignments
 # ================================
-# front left wheel pin 5 - forward, 6 - backward
-# front right wheel pin 13 - forward, 19 - backward
-# rear left wheel pin 12 - forward, 16 - backward
-# rear right wheel pin 20 - forward, 21 - backward
-# front pwm pin 18, rear pwm pin 23
-USE_MOCK = False   # <-- set to False when motors are wired
+# front left wheel pin 11 - forward, 12 - backward
+# front right wheel pin 13 - forward, 15 - backward
+# rear left wheel pin 16 - forward, 18 - backward
+# rear right wheel pin 22 - forward, 37 - backward
+# H-bridge connections shorted: PWM pins bypassed
 # ================================
 
-if USE_MOCK:
-    # ---------------- MOCK HARDWARE ----------------
-    class Motor:
-        def __init__(self, forward=None, backward=None):
-            self.forward_pin = forward
-            self.backward_pin = backward
-
-        def forward(self):
-            print(f"[MOCK] Motor({self.forward_pin},{self.backward_pin}) -> FORWARD")
-
-        def backward(self):
-            print(f"[MOCK] Motor({self.forward_pin},{self.backward_pin}) -> BACKWARD")
-
-        def stop(self):
-            print(f"[MOCK] Motor({self.forward_pin},{self.backward_pin}) -> STOP")
-
-
-    class PWMOutputDevice:
-        def __init__(self, pin):
-            self.pin = pin
-            self._value = 0.0
-
-        @property
-        def value(self):
-            return self._value
-
-        @value.setter
-        def value(self, v):
-            self._value = v
-            print(f"[MOCK] PWM(pin={self.pin}) = {v}")
-
-else:
-    # ---------------- REAL HARDWARE ----------------
-    from gpiozero import Motor, PWMOutputDevice
+from gpiozero import Motor
 
 
 class MecanumVehicle:
@@ -50,12 +16,10 @@ class MecanumVehicle:
         # Front motors (L298 #1)
         self.fl = Motor(forward=11, backward=12)
         self.fr = Motor(forward=13, backward=15)
-        self.front_pwm = PWMOutputDevice(18)
 
         # Rear motors (L298 #2)
         self.rl = Motor(forward=16, backward=18)
         self.rr = Motor(forward=22, backward=37)
-        self.rear_pwm = PWMOutputDevice(23)
 
     def _set_motor(self, motor, direction):
         if direction > 0:
@@ -65,14 +29,11 @@ class MecanumVehicle:
         else:
             motor.stop()
 
-    def drive(self, fl, fr, rl, rr, speed):
+    def drive(self, fl, fr, rl, rr, speed=1.0):
         self._set_motor(self.fl, fl)
         self._set_motor(self.fr, fr)
         self._set_motor(self.rl, rl)
         self._set_motor(self.rr, rr)
-
-        self.front_pwm.value = speed
-        self.rear_pwm.value = speed
 
     def stop(self):
         self.drive(0, 0, 0, 0, 0)
