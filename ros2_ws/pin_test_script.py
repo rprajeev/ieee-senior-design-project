@@ -1,11 +1,6 @@
 from gpiozero import Motor
 from time import sleep
 
-# Motor pin mappings (BOARD to GPIO conversion)
-# Motor 1: BOARD 11 (GPIO17), BOARD 12 (GPIO27)
-# Motor 2: BOARD 13 (GPIO22), BOARD 15 (GPIO23)
-# Motor 3: BOARD 16 (GPIO24), BOARD 18 (GPIO25)
-# Motor 4: BOARD 22 (GPIO26), BOARD 37 (GPIO26)
 
 motors = [
     {"name": "Motor 1", "forward": "GPIO17", "backward": "GPIO18"},
@@ -14,21 +9,29 @@ motors = [
     {"name": "Motor 4", "forward": "GPIO25", "backward": "GPIO26"},
 ]
 
-# Test each motor
+# Test each motor one by one
 for motor_config in motors:
-    print(f"\nTesting {motor_config['name']}...")
+    print(f"\n{'='*50}")
+    print(f"Testing {motor_config['name']}")
+    print(f"Forward: {motor_config['forward']}")
+    print(f"Backward: {motor_config['backward']}")
+    print(f"{'='*50}")
+    
+    input("Press ENTER to start pulsing motor...")
+    
     motor = Motor(forward=motor_config["forward"], backward=motor_config["backward"])
     
-    print(f"  Forward...")
-    motor.forward()
-    sleep(2)
+    # Pulse forward until enter is pressed
+    try:
+        while True:
+            motor.forward()
+            sleep(0.5)
+            motor.stop()
+            sleep(0.5)
+    except KeyboardInterrupt:
+        pass
     
-    print(f"  Backward...")
-    motor.backward()
-    sleep(2)
-    
-    print(f"  Stopped.")
     motor.stop()
-    sleep(1)
+    print(f"Motor stopped.\n")
 
 print("\nAll motor tests completed!")
