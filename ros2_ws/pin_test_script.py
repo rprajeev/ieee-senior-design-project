@@ -1,7 +1,7 @@
-from gpiozero import motor
+from gpiozero import Motor
 from time import sleep
 
-motor = motor(forward="GPIO17", backward="GPIO18")
+motor = Motor(forward="BOARD11", backward="BOARD12")
 motor.forward()
 sleep(2)
 motor.backward()
