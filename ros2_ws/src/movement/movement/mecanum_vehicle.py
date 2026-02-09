@@ -14,12 +14,12 @@ from gpiozero import Motor
 class MecanumVehicle:
     def __init__(self):
         # Front motors (L298 #1)
-        self.fl = Motor(forward=11, backward=12)
-        self.fr = Motor(forward=13, backward=15)
+        self.fl = Motor(forward="BCM11", backward="BCM12")
+        self.fr = Motor(forward="BCM13", backward="BCM15")
 
         # Rear motors (L298 #2)
-        self.rl = Motor(forward=16, backward=18)
-        self.rr = Motor(forward=22, backward=37)
+        self.rl = Motor(forward="BCM16", backward="BCM18")
+        self.rr = Motor(forward="BCM22", backward="BCM27")
 
     def _set_motor(self, motor, direction):
         if direction > 0:
