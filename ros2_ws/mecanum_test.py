@@ -5,16 +5,16 @@ from time import sleep
 motors = [
     {"name": "Motor 1", "forward": "GPIO17", "backward": "GPIO18"},
     {"name": "Motor 2", "forward": "GPIO27", "backward": "GPIO22"},
-    {"name": "Motor 3", "forward": "GPIO23", "backward": "GPIO24"},
-    {"name": "Motor 4", "forward": "GPIO25", "backward": "GPIO26"},
+    {"name": "Motor 3", "forward": "GPIO24", "backward": "GPIO23"},  # Inverted
+    {"name": "Motor 4", "forward": "GPIO26", "backward": "GPIO25"},  # Inverted
 ]
 
 # Position mapping for mecanum drive
 positions = {
-    "FR": motors[0],  # Front Right
-    "FL": motors[1],  # Front Left
-    "BL": motors[2],  # Back Left
-    "BR": motors[3],  # Back Right
+    "BL": motors[0],  # Motor 1 - Back Left
+    "BR": motors[1],  # Motor 2 - Back Right
+    "FR": motors[2],  # Motor 3 - Front Right
+    "FL": motors[3],  # Motor 4 - Front Left
 }
 
 # Create motor objects
