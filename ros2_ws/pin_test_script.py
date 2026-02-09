@@ -8,10 +8,10 @@ from time import sleep
 # Motor 4: BOARD 22 (GPIO26), BOARD 37 (GPIO26)
 
 motors = [
-    {"name": "Motor 1", "forward": "GPIO17", "backward": "GPIO27"},
-    {"name": "Motor 2", "forward": "GPIO22", "backward": "GPIO23"},
-    {"name": "Motor 3", "forward": "GPIO24", "backward": "GPIO25"},
-    {"name": "Motor 4", "forward": "GPIO26", "backward": "GPIO12"},
+    {"name": "Motor 1", "forward": "GPIO17", "backward": "GPIO18"},
+    {"name": "Motor 2", "forward": "GPIO27", "backward": "GPIO22"},
+    {"name": "Motor 3", "forward": "GPIO23", "backward": "GPIO24"},
+    {"name": "Motor 4", "forward": "GPIO25", "backward": "GPIO26"},
 ]
 
 # Test each motor
