@@ -17,21 +17,21 @@ for motor_config in motors:
     print(f"Backward: {motor_config['backward']}")
     print(f"{'='*50}")
     
-    input("Press ENTER to start pulsing motor...")
-    
     motor = Motor(forward=motor_config["forward"], backward=motor_config["backward"])
     
-    # Pulse forward until enter is pressed
-    try:
-        while True:
-            motor.forward()
-            sleep(0.5)
-            motor.stop()
-            sleep(0.5)
-    except KeyboardInterrupt:
-        pass
-    
+    # Forward
+    input("Press ENTER for forward...")
+    motor.forward()
+    sleep(3)
     motor.stop()
-    print(f"Motor stopped.\n")
+    
+    # Reverse
+    input("Press ENTER for reverse...")
+    motor.backward()
+    sleep(3)
+    motor.stop()
+    
+    # Next motor
+    input("Press ENTER for next motor...")
 
 print("\nAll motor tests completed!")
