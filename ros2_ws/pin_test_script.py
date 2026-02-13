@@ -49,7 +49,7 @@ move_forward(BASE_SPEED)
 sleep(FORWARD_TIME)
 stop_all()
 
-sleep(1)
+sleep(5)
 
 # Turn
 turn_right(0.7)
